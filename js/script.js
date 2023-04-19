@@ -1,9 +1,7 @@
-
 function addRSStoDOM(data) {
   let itemsContainer = document.createElement('DIV');
-
   for (let i = 0, t = data.items.length; i < t; ++i) {
-    let item = data.items[i];
+    let item = data.items[i];  // get the item
     let itemContainer = document.createElement('DIV');
     let itemLinkElement = document.createElement('A');
     itemLinkElement.setAttribute('href', item.link);
@@ -22,19 +20,17 @@ function addRSStoDOM(data) {
   content.appendChild(itemsContainer);
 }
 
-
 var content = document.getElementsByTagName('main')[0]
-
 
 var xhr = new XMLHttpRequest();
 xhr.onload = function() {
   if (xhr.status >=200 && xhr.status < 300) {
     json = JSON.parse(xhr.responseText)
-    console.log(jason)
+    console.log(json)
+    addRSStoDOM(json)
   } else {
     console.log("The request failed")
-    content.innerHTML = "The request failed, lease check you RSS url"
-
+    content.innerHTML = "The request failed, please check you RSS url"
   }
 }
 
@@ -45,7 +41,6 @@ let newRSSInput = document.getElementById("rss-input");
 function onAddRSSClicked(event) {
   let URL = newRSSInput.value;
   newRSSInput.value = "";
-
   xhr.open('GET', 'https://api.rss2json.com/v1/api.json?rss_url=' + URL);
   xhr.send();
 }
